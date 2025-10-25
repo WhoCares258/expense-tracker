@@ -1,0 +1,373 @@
+/* ========================= */
+/* BASE STYLING */
+/* ========================= */
+
+body {
+  background-color: #3B3B3B;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 80%;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+}
+
+/* ========================= */
+/* HEADER & BUTTONS */
+/* ========================= */
+#add-expense-container {
+  background-color: #B499FF;
+}
+
+#expenses-list-container {
+  background-color: black;
+  color: white;
+}
+
+.custom-btn {
+  background-color: #4C006B;
+  color: #ffffff;
+  border: none;
+  padding: 10px 25px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.3px;
+  border-radius: 8px;
+  transition: 0.25s;
+}
+
+.custom-btn:hover {
+  background-color: #5f0090;
+  color: #B499FF;
+}
+
+/* ========================= */
+/* RESPONSIVE TEXT SCALE (GENERAL) */
+/* ========================= */
+@media (max-width: 375px) {
+  h5, .fs-5, .form-control {
+    font-size: 1rem !important;
+  }
+
+  .btn, .custom-btn {
+    font-size: 0.9rem !important;
+    padding: 8px 16px !important;
+  }
+}
+
+/* ========================= */
+/* MONTHLY CHART */
+/* ========================= */
+
+#month-bars-container {
+  background-color: #e8d3ff;
+  border-radius: 15px;
+  padding: 15px 0;
+}
+
+.month-bar {
+  width: 38px;
+  height: 120px;
+  background-color: #d9c4ff;
+  border: 1.5px solid #3b0066;
+  border-radius: 15px;
+  margin: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.month-fill {
+  width: 100%;
+  background-color: #4b0099;
+  transition: height 0.5s ease-in-out;
+}
+
+.month-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-top: 4px;
+  color: #000;
+  letter-spacing: 0.3px;
+}
+
+/* ========================= */
+/* EXPENSE LIST */
+/* ========================= */
+#expenses-display-container {
+  padding: 0;
+  margin-top: 15px;
+}
+
+/* Expense card */
+.expense-item {
+  background-color: #4a4a4a;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  min-height: 95px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  font-family: 'Inter', sans-serif;
+}
+
+.expense-item:hover {
+  background-color: #5c00b3; /* subtle purple highlight */
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(92, 0, 179, 0.4);
+  cursor: pointer;
+}
+
+/* Date box */
+.expense-date {
+  background-color: #2c2c2c;
+  border: 1px solid white;
+  border-radius: 8px;
+  margin-left: 10px;
+  width: 85px;
+  height: 80px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.2;
+  font-family: 'Roboto Mono', monospace;
+}
+
+/* Month */
+.expense-date div:nth-child(1) {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ccc;
+}
+
+/* Year */
+.expense-date div:nth-child(2) {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #ddd;
+  margin: 2px 0;
+}
+
+/* Day */
+.expense-date div:nth-child(3) {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Title & Amount */
+.expense-title {
+  flex-grow: 1;
+  text-align: left;
+  margin-left: 15px;
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: 0.2px;
+}
+
+.expense-amount {
+  background-color: #5c00b3;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 1.4rem;
+  margin-right: 10px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.expense-item:hover .expense-date {
+  border-color: #b499ff;
+}
+
+.expense-item:hover .expense-amount {
+  background-color: #7d2eff;
+  color: #fff;
+}
+
+
+/* No expenses */
+#expenses-list p {
+  background: transparent !important;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 25px 0;
+  text-align: center;
+  box-shadow: none;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ========================= */
+/* RESPONSIVE SIZE ADJUSTMENTS */
+/* ========================= */
+@media (max-width: 768px) {
+  .expense-item {
+    min-height: 85px;
+  }
+
+  .expense-date {
+    width: 75px;
+    height: 70px;
+  }
+
+  .expense-date div:nth-child(1) {
+    font-size: 1rem;
+  }
+
+  .expense-date div:nth-child(2) {
+    font-size: 0.65rem;
+  }
+
+  .expense-date div:nth-child(3) {
+    font-size: 1.3rem;
+  }
+
+  .expense-title {
+    font-size: 1.1rem;
+  }
+
+  .expense-amount {
+    font-size: 1.1rem;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .expense-item {
+    min-height: 75px;
+  }
+
+  .expense-date {
+    width: 65px;
+    height: 60px;
+  }
+
+  .expense-date div:nth-child(1) {
+    font-size: 0.85rem;
+  }
+
+  .expense-date div:nth-child(2) {
+    font-size: 0.6rem;
+  }
+
+  .expense-date div:nth-child(3) {
+    font-size: 1.1rem;
+  }
+
+  .expense-title {
+    font-size: 1rem;
+  }
+
+  .expense-amount {
+    font-size: 1rem;
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .expense-item {
+    min-height: 65px;
+  }
+
+  .expense-date {
+    width: 58px;
+    height: 55px;
+  }
+
+  .expense-date div:nth-child(1) {
+    font-size: 0.75rem;
+  }
+
+  .expense-date div:nth-child(2) {
+    font-size: 0.55rem;
+  }
+
+  .expense-date div:nth-child(3) {
+    font-size: 0.9rem;
+  }
+
+  .expense-title {
+    font-size: 0.85rem;
+  }
+
+  .expense-amount {
+    font-size: 0.85rem;
+    padding: 4px 8px;
+  }
+}
+@keyframes fadeHighlight {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Delete button (hidden by default) */
+.delete-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  background-color: #dc3545;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+}
+
+/* Show button only on hover */
+.expense-item:hover .delete-btn {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Smooth hover over card */
+.expense-item {
+  position: relative;
+  background-color: #4a4a4a;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  min-height: 95px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s ease;
+}
+
+.expense-item:hover {
+  background-color: #5c00b3;
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(92, 0, 179, 0.4);
+}
+
+#total-expense-display {
+  background-color: #4c006b;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease-in-out;
+  display: inline-block; /* makes width fit content */
+  margin: 15px auto;     /* center horizontally */
+  text-align: center;
+}
