@@ -13,8 +13,8 @@ It allows users to record daily expenses, view totals by year, and visualize mon
 - Shows **“Found no expenses”** when no data exists for the selected year  
 - Dynamic **monthly bar chart** representing total spending  
 - Displays **total yearly expenses**  
-- Fully **responsive layout** using Bootstrap  
-- Subtle **hover effects** on expense cards  
+- Fully **responsive layout** using Bootstrap
+- Subtle **hover effects** on expense cards with **delete expense** button
 - Built-in **jQuery** for smooth updates and interactions  
 
 ---
@@ -25,7 +25,8 @@ It allows users to record daily expenses, view totals by year, and visualize mon
 - CSS3 (Bootstrap 5.3)  
 - JavaScript (ES6)  
 - jQuery  
-- Flaticon (for icons)
+- Flaticon (for icons) [<a href="https://www.flaticon.com/free-icons/budget" title="budget icons">Budget icons created by Freepik - Flaticon</a>]
+  
 
 ---
 
