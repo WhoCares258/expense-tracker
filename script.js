@@ -59,16 +59,12 @@ let expenses = [
   { title: "Phone Bill", amount: 70, date: new Date("2022-11-02") },
 ];
 
-console.table(expenses);
-
 // ==========================
 //  MONTHLY BAR CHART (CUSTOM)
 // ==========================
-
 const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
-// Create month bar elements once
 const monthBarsContainer = $("#month-bars");
+
 monthNames.forEach(month => {
   const bar = `
     <div class="col-3 col-sm-2 col-md-1 d-flex flex-column align-items-center mb-3">
@@ -76,8 +72,7 @@ monthNames.forEach(month => {
         <div class="month-fill" style="height: 0%;"></div>
       </div>
       <div class="month-label">${month}</div>
-    </div>
-  `;
+    </div>`;
   monthBarsContainer.append(bar);
 });
 
@@ -86,27 +81,19 @@ monthNames.forEach(month => {
 // ==========================
 function updateMonthBars(selectedYear) {
   const monthlyTotals = new Array(12).fill(0);
-
   expenses.forEach(exp => {
-    const year = exp.date.getFullYear();
-    const month = exp.date.getMonth();
-    if (year === selectedYear) monthlyTotals[month] += exp.amount;
+    if (exp.date.getFullYear() === selectedYear)
+      monthlyTotals[exp.date.getMonth()] += exp.amount;
   });
 
-  // Update bars
   const maxValue = Math.max(...monthlyTotals, 1);
   $(".month-fill").each(function (i) {
     const percent = (monthlyTotals[i] / maxValue) * 100;
     $(this).css("height", percent + "%");
   });
 
-  // Calculate total yearly expense
   const total = monthlyTotals.reduce((a, b) => a + b, 0);
-
-  // Update display
-  $("#total-expense-display").text(
-    `Total Expense for ${selectedYear}: $${total.toFixed(2)}`
-  );
+  $("#total-expense-display").text(`Total Expense for ${selectedYear}: $${total.toFixed(2)}`);
 }
 
 // ==========================
@@ -131,36 +118,72 @@ function displayExpenses(selectedYear) {
     const year = exp.date.getFullYear();
 
     const item = `
-    <div class="expense-item" data-index="${expenses.indexOf(exp)}">
+      <div class="expense-item" data-index="${expenses.indexOf(exp)}">
         <div class="expense-date">
-            <div>${month}</div>
-            <div>${year}</div>
-            <div class="fw-bold">${day}</div>
+          <div>${month}</div>
+          <div>${year}</div>
+          <div class="fw-bold">${day}</div>
         </div>
         <div class="expense-title">${exp.title}</div>
         <div class="expense-amount">$${exp.amount.toFixed(2)}</div>
         <button class="delete-btn btn btn-sm btn-danger">✕</button>
-    </div>
-    `;
+      </div>`;
     listContainer.append(item);
   });
+}
+
+// ==========================
+//  POPUP NOTIFICATION
+// ==========================
+function showPopup(message, type = "success") {
+  const popup = $(`<div class="popup-notification ${type}">${message}</div>`);
+  $("body").append(popup);
+  setTimeout(() => popup.addClass("show"), 100);
+  setTimeout(() => {
+    popup.removeClass("show");
+    setTimeout(() => popup.remove(), 300);
+  }, 2500);
+}
+
+// ==========================
+//  CUSTOM CONFIRMATION POPUP
+// ==========================
+function showConfirm(message, onConfirm) {
+  const modal = $(`
+    <div class="custom-confirm-overlay">
+      <div class="custom-confirm-box">
+        <p>${message}</p>
+        <div class="confirm-buttons">
+          <button id="confirm-yes" class="btn btn-sm btn-danger me-2">Yes</button>
+          <button id="confirm-no" class="btn btn-sm btn-secondary">No</button>
+        </div>
+      </div>
+    </div>
+  `);
+
+  $("body").append(modal);
+
+  $("#confirm-yes").click(() => {
+    onConfirm();
+    modal.fadeOut(200, () => modal.remove());
+  });
+
+  $("#confirm-no").click(() => modal.fadeOut(200, () => modal.remove()));
 }
 
 // ==========================
 // DELETE EXPENSE HANDLER
 // ==========================
 $(document).on("click", ".delete-btn", function (e) {
-  e.stopPropagation(); // prevent click bubbling
-
+  e.stopPropagation();
   const index = $(this).closest(".expense-item").data("index");
 
-  if (confirm("Are you sure you want to delete this expense?")) {
-    expenses.splice(index, 1); // remove from array
-
-    // Re-render chart and list
+  showConfirm("Are you sure you want to delete this expense?", function () {
+    expenses.splice(index, 1);
     updateMonthBars(currentYear);
     displayExpenses(currentYear);
-  }
+    showPopup("Expense deleted successfully.", "delete");
+  });
 });
 
 // ==========================
@@ -202,20 +225,17 @@ $("#expense-form").submit(function (e) {
   const date = $("#date").val();
 
   if (!title || !amount || !date) {
-    alert("Please fill in all fields!");
+    showPopup("Please fill in all fields!", "delete");
     return;
   }
 
   const newExpense = { title, amount, date: new Date(date) };
   expenses.push(newExpense);
-  console.table(expenses);
-  alert(`Added: ${title} — RM${amount} on ${date}`);
 
-  // Update UI
+  showPopup(`Added: ${title} — RM${amount} on ${date}`, "success");
   updateMonthBars(currentYear);
   displayExpenses(currentYear);
 
-  // Reset and hide form
   this.reset();
   $("#expense-form").fadeOut(200, function () {
     $("#show-form-btn").fadeIn(300);
